@@ -1,16 +1,15 @@
-import Debug "mo:base/Debug";
 import Array "mo:base/Array";
+import Debug "mo:base/Debug";
+import EC "mo:base/ExperimentalCycles";
+import Float "mo:base/Float";
+import Int "mo:base/Int";
 import Iter "mo:base/Iter";
 import Nat "mo:base/Nat";
-import Int "mo:base/Int";
-import Float "mo:base/Float";
 import Nat64 "mo:base/Nat64";
 import Principal "mo:base/Principal";
-import EC "mo:base/ExperimentalCycles";
 
 import Archive "../../src/ICRC1/Canisters/Archive";
 import T "../../src/ICRC1/Types";
-
 import ActorSpec "../utils/ActorSpec";
 
 module {
@@ -55,7 +54,7 @@ module {
 
     func create_canister_and_add_cycles(n : Float) {
         EC.add(
-            CREATE_CANISTER + Int.abs(Float.toInt(n * 1_000_000_000_000)),
+            CREATE_CANISTER + Int.abs(Float.toInt(n * 1_000_000_000_000))
         );
     };
 
@@ -109,7 +108,7 @@ module {
                         create_canister_and_add_cycles(0.1);
                         let archive = await Archive.Archive();
 
-                        let txs = new_txs(5000);
+                        let txs = new_txs(6000);
 
                         let res = await archive.append_transactions(txs);
 
@@ -118,9 +117,13 @@ module {
                             length = 2000;
                         });
 
+                        let tx_all = await archive.total_transactions();
+                        Debug.print("aaaaaa:");
+                        Debug.print(Int.toText(tx_all));
+
                         assertAllTrue([
                             res == #ok(),
-                            (await archive.total_transactions()) == 5000,
+                            tx_all == 6000,
                             (await archive.get_transactions({ start = 0; length = 100 })).transactions == txs_range(0, 100),
                             (await archive.get_transactions({ start = 225; length = 100 })).transactions == txs_range(225, 325),
                             (await archive.get_transactions({ start = 225; length = 1200 })).transactions == txs_range(225, 1425),

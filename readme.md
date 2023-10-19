@@ -28,8 +28,8 @@ This repo contains the implementation of the
     dfx start --background --clean
 
     dfx deploy icrc1 --argument '( record {                     
-        name = "<Insert Token Name>";                         
-        symbol = "<Insert Symbol>";                           
+        name = "OGYD";                         
+        symbol = "OGYD";                           
         decimals = 6;                                           
         fee = 1_000_000;                                        
         max_supply = 1_000_000_000_000;                         

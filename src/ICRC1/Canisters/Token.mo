@@ -1,17 +1,15 @@
 import Array "mo:base/Array";
+import ExperimentalCycles "mo:base/ExperimentalCycles";
 import Iter "mo:base/Iter";
 import Option "mo:base/Option";
 import Time "mo:base/Time";
-
-import ExperimentalCycles "mo:base/ExperimentalCycles";
-
 import SB "mo:StableBuffer/StableBuffer";
 
 import ICRC1 "..";
 import Archive "Archive";
 
 shared ({ caller = _owner }) actor class Token(
-    init_args : ICRC1.TokenInitArgs,
+    init_args : ICRC1.TokenInitArgs
 ) : async ICRC1.FullInterface {
 
     let icrc1_args : ICRC1.InitArgs = {
